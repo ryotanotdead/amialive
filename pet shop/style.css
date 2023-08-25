@@ -2,7 +2,9 @@
 *::after *::before {
     box-sizing: border-box;
 }
-
+a {
+    text-decoration: none;
+}
 .html {
     scroll-behavior: smooth;
 }
@@ -26,11 +28,14 @@
 .basket {
     padding-right: 5%;
     border-radius: 5px;
+    font-size: 50px;
+    color: #131313;
 }
 .main_info {
     display: flex;
     align-content: flex-start;
     justify-content: space-between;
+    padding-left: 4%;
 }
 .categories {
     display: flex;
@@ -69,10 +74,15 @@
     display: inline-block;
     color: red;
 }
-
+.cat {
+    font-size: 50px;
+}
 .card-container {
     position: relative;
 }
 .items > img {
     width: 50px;
+}
+.counterInput {
+    border: #131313;
 }
