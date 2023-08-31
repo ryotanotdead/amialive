@@ -22,15 +22,36 @@ const addItems = async (url) => {
         image.src = item.image
         price.innerHTML = `${item.price} $`
         // description.innerHTML = item.description
-        let arr = []
         button.innerHTML = 'В корзину'
         button.onclick = () => {
             counterCard.innerHTML = +counterCard.innerHTML + 1
-            if (localStorage.getItem('cart'))
-                arr = JSON.parse(localStorage.getItem('cart'))
-            arr.push(item)
-            // localStorage.setItem('cart', localStorage.getItem('cart') + item)
-            localStorage.setItem('cart', JSON.stringify(arr))
+            const cardItems = JSON.parse(localStorage.getItem('cart'))
+            console.log(cardItems)
+            const firstItemInStore = {
+                quantity: 1,
+                value: item,
+            }
+            if (cardItems) {
+                let isFindEqual = false
+                for (let i = 0; i < cardItems.length; i++) {
+                    if (
+                        JSON.stringify(cardItems[i].value) ===
+                        JSON.stringify(item)
+                    ) {
+                        cardItems[i].quantity += 1
+                        isFindEqual = true
+                        break
+                    }
+                }
+                if (!isFindEqual) {
+                    cardItems.push(firstItemInStore)
+                }
+                localStorage.setItem('cart', JSON.stringify(cardItems))
+            } else {
+                const store = []
+                store.push(firstItemInStore)
+                localStorage.setItem('cart', JSON.stringify(store))
+            }
         }
 
         main.appendChild(image)
@@ -74,3 +95,10 @@ const addAllCategories = async (url) => {
     })
 }
 addAllCategories('https://fakestoreapi.com/products/categories')
+
+const allCategoriesHandler = () => {
+    const itemsContainer = document.querySelector('.items-container')
+    removeAllChildNodes(itemsContainer)
+    addItems('https://fakestoreapi.com/products')
+}
+document.querySelector('.allcategoriezz').onclick = allCategoriesHandler
